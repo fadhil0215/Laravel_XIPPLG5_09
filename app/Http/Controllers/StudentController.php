@@ -34,7 +34,7 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
-        return response()->json($student);
+        return view('admin.student.show', compact('student'));
     }
 
     public function edit(Student $student)
