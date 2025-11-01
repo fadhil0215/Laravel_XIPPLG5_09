@@ -39,21 +39,20 @@ class StudentController extends Controller
 
     public function edit(Student $student)
     {
-        return response()->noContent();
+        return view('admin.student.edit', compact('student'));
     }
 
     public function update(Request $request, Student $student)
     {
-        $data = $request->validate([
-            'nis' => 'sometimes|required|unique:students,nis,' . $student->id,
-            'nama_lengkap' => 'sometimes|required|string',
-            'jenis_kelamin' => 'sometimes|required|in:L,P',
-            'nisn' => 'nullable|string',
+        $validated = $request->validate([
+        'nis' => 'required',
+        'nama_lengkap' => 'required',
+        'jenis_kelamin' => 'required',
+        'nisn' => 'required',
         ]);
-
-        $student->update($data);
-
-        return response()->json($student);
+        
+        $student->update ($validated);
+        return redirect()->route('admin.students.index')->with('success', 'Data siswa berhasil diperbarui');
     }
 
     public function destroy(Student $student)
